@@ -184,11 +184,9 @@ void deleteAtFirst(struct node** head, struct node** tail)
 		}
 		else
 		{
-			struct node* tempnode = *head;
-			
 			*head = (*head)->next;
+			free((*head)->previous);
 			(*head)->previous = NULL;
-			free(tempnode);
 		}
 		printf("Node Deleted Successflly... \n");
 	}
@@ -209,11 +207,9 @@ void deleteAtLast(struct node** head, struct node** tail)
 		}
 		else
 		{
-			struct node* tempnode = *tail;
-
 			*tail = (*tail)->previous;
+			free((*tail)->next);
 			(*tail)->next = NULL;
-			free(tempnode);
 		}
 		printf("Node Deleted Successfully...\n");
 	}
@@ -249,17 +245,15 @@ void deleteAtPosition(struct node** head, struct node** tail)
 		else
 		{
 			struct node* tempnode = *head;
-			struct node* deletenode = NULL;
-
-			for (int i = 1; i < pos-1; i++)
+			
+			for (int i = 1; i < pos; i++)
 			{
 				tempnode = tempnode->next;
 			}
 
-			deletenode = tempnode->next;
-			tempnode->next = deletenode->next;
-			deletenode->next->previous = deletenode->previous;
-			free(deletenode);
+			tempnode->previous->next = tempnode->next;
+			tempnode->next->previous = tempnode->previous;
+			free(tempnode);
 
 			printf("Node Deleted Successfully...\n");
 		}
