@@ -129,6 +129,55 @@ void insertAtLast(struct node** tail)
 	createLinkedList(tail);
 }
 
+void insertAfterData(struct node** tail)
+{
+	if (*tail == NULL)
+	{
+		printf("Linked List is empty. You are inserting first Node.\n");
+		insertAtFirst(tail);
+	}
+	else
+	{
+		struct node* tempnode = *tail;
+		int value;
+		printf("Enter a data after you want to insert node: ");
+		scanf_s("%d", &value);
+
+		if (tempnode->data == value)
+		{
+			insertAtLast(tail);
+		}
+		else
+		{
+			int flag = 0;
+			while (tempnode->data != value)
+			{
+				tempnode = tempnode->next;
+				if (tempnode == *tail)
+				{
+					flag = 1;
+					break;
+				}
+			}
+			if (flag == 1)
+			{
+				printf("Data not found. Please enter a valid data.\n");
+				insertAfterData(tail);
+			}
+			else
+			{
+				struct node* newnode = NULL;
+				newnode = createNode();
+
+				newnode->next = tempnode->next;
+				newnode->previous = tempnode;
+				tempnode->next->previous = newnode;
+				tempnode->next = newnode;
+			}
+		}
+	}
+}
+
 void main()
 {
 	int choice;
@@ -144,6 +193,7 @@ void main()
 		printf("3. Display Reversed Linked List.\n");
 		printf("4. Insert At First.\n");
 		printf("5. Insert At Last.\n");
+		printf("6. Insert After Some Data.\n");
 		printf("Choice = ");
 		scanf_s("%d", &choice);
 		printf("*****************************************************\n");
@@ -167,6 +217,9 @@ void main()
 			break;
 		case 5:
 			insertAtLast(&last);
+			break;
+		case 6:
+			insertAfterData(&last);
 			break;
 		default:
 			printf("Please Enter a Valid Choice.\n");
