@@ -21,7 +21,7 @@ struct Circular_Queue // Structure for Circular Queue
 
 void initQueue(struct Circular_Queue* queueptr) // Function to initialize the Queue variables.
 {
-	queueptr->front = queueptr->rear = 0;
+	queueptr->front = queueptr->rear = -1;
 }
 
 int isFull(struct Circular_Queue* queueptr) // Function to check queue is full or not.
@@ -31,7 +31,7 @@ int isFull(struct Circular_Queue* queueptr) // Function to check queue is full o
 
 int isEmpty(struct Circular_Queue* queueptr) // Function to check queue if empty or not.
 {
-	return queueptr->rear == queueptr->front;
+	return queueptr->rear == -1;
 }
 
 void enQueue(struct Circular_Queue* queueptr) // Function to insert data into the queue.
@@ -39,12 +39,19 @@ void enQueue(struct Circular_Queue* queueptr) // Function to insert data into th
 	if (!isFull(queueptr)) // Check if queue is full or not 
 	{
 		// Logic to insert data into the queue.
+		if (queueptr->rear == -1)
+		{
+			queueptr->front = queueptr->rear = 0;
+		}
+		else
+		{
+			queueptr->rear = (queueptr->rear + 1) % MAX;
+		}
 		int data;
 		printf("Enter a data: ");
 		scanf_s("%d", &data);
 
 		queueptr->arr[queueptr->rear] = data;
-		queueptr->rear = (queueptr->rear + 1) % MAX;
 	}
 	else
 	{
@@ -58,10 +65,16 @@ int deQueue(struct Circular_Queue* queueptr) // Function to delete data from the
 	{
 		// Logic to delete data from the queue.
 		int data;
-
 		data = queueptr->arr[queueptr->front];
-		queueptr->front = (queueptr->front + 1) % MAX;
 
+		if (queueptr->front == queueptr->rear)
+		{
+			initQueue(queueptr);
+		}
+		else
+		{
+			queueptr->front = (queueptr->front + 1) % MAX;
+		}
 
 		return data;
 	}
