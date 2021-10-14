@@ -13,14 +13,14 @@ Batch: PPA9
 #include<stdlib.h>
 
 
-struct node
+struct node // Structure of the BST.
 {
 	struct node* left;
 	int data;
 	struct node* right;
 };
 
-struct node* createNode()
+struct node* createNode() // Function to create node for the BST.
 {
 	struct node* newnode = NULL;
 
@@ -43,21 +43,21 @@ struct node* createNode()
 	return newnode;
 }
 
-void createBST(struct node** root)
+void createBST(struct node** root) // Function to create BST.
 {
 	struct node* newnode = NULL;
 	struct node* tempnode = *root;
 	newnode = createNode();
 
-	if (*root == NULL)
+	if (*root == NULL) // If given node is the first node in the BST.
 	{
 		*root = newnode;
 	}
 	else
 	{
-		while(tempnode != NULL)
+		while(tempnode != NULL) // Condition for traversal of BST.
 		{
-			if (newnode->data < tempnode->data)
+			if (newnode->data < tempnode->data) // If given node data is less then root node's data.
 			{
 				 if(tempnode->left == NULL)
 				 {
@@ -69,7 +69,7 @@ void createBST(struct node** root)
 					 tempnode = tempnode->left;
 				 }
 			}
-			else
+			else // Given node data is greater than root node's data.
 			{
 				if (tempnode->right == NULL)
 				{
@@ -85,7 +85,7 @@ void createBST(struct node** root)
 	}
 }
 
-void preorder(struct node* root)
+void preorder(struct node* root) // Function for preorder traversal of BST.
 {
 	if (root != NULL)
 	{
@@ -96,7 +96,7 @@ void preorder(struct node* root)
 }
 
 
-void inorder(struct node* root)
+void inorder(struct node* root) // Function for inorder traversal of BST.
 {
 	if (root != NULL)
 	{
@@ -107,7 +107,7 @@ void inorder(struct node* root)
 }
 
 
-void postorder(struct node* root)
+void postorder(struct node* root) // Function for postorder traversal of the BST.
 {
 	if (root != NULL)
 	{
@@ -124,6 +124,7 @@ void main()
 
 	do
 	{
+		// Menu for the program.
 		printf("********************************************\n");
 		printf("Please Enter Your Choice: \n");
 		printf("0. Exit.\n");
@@ -135,7 +136,7 @@ void main()
 		scanf_s("%d", &choice);
 		printf("********************************************\n");
 
-		switch (choice)
+		switch (choice) // Switch case to execute user input.
 		{
 		case 0:
 			printf("Thank you!!!\n");
