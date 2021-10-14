@@ -1,13 +1,15 @@
+/*
+
+Que : Write a C program for Creation of BST and it's various operations.
+Owner: Rushikesh Sanjay Pokharkar
+Batch: PPA9
+
+*/
+
+//                                        *********  Solution  *********
 
 
-
-
-
-
-
-
-
-#include <stdio.h>
+#include<stdio.h> //Include Necessary Header Files.
 #include<stdlib.h>
 
 
@@ -83,6 +85,38 @@ void createBST(struct node** root)
 	}
 }
 
+void preorder(struct node* root)
+{
+	if (root != NULL)
+	{
+		printf("%d =>", root->data);
+		preorder(root->left);
+		preorder(root->right);
+	}
+}
+
+
+void inorder(struct node* root)
+{
+	if (root != NULL)
+	{
+		inorder(root->left);
+		printf("%d =>", root->data);
+		inorder(root->right);
+	}
+}
+
+
+void postorder(struct node* root)
+{
+	if (root != NULL)
+	{
+		postorder(root->left);
+		postorder(root->right);
+		printf("%d =>", root->data);
+	}
+}
+
 void main()
 {
 	struct node* root = NULL;
@@ -108,6 +142,21 @@ void main()
 			break;
 		case 1:
 			createBST(&root);
+			break;
+		case 2:
+			printf("Preorder Traversal: ");
+			preorder(root);
+			printf("\n");
+			break;
+		case 3:
+			printf("Inorder Traversal: ");
+			inorder(root);
+			printf("\n");
+			break;
+		case 4:
+			printf("Postorder Traversal: ");
+			postorder(root);
+			printf("\n");
 			break;
 		default:
 			printf("Please Enter a Valid Choice.\n");
