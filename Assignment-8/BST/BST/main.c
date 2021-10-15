@@ -89,23 +89,21 @@ void preorder(struct node* root) // Function for preorder traversal of BST.
 {
 	if (root != NULL)
 	{
-		printf("%d =>", root->data);
+		printf("%d => ", root->data);
 		preorder(root->left);
 		preorder(root->right);
 	}
 }
-
 
 void inorder(struct node* root) // Function for inorder traversal of BST.
 {
 	if (root != NULL)
 	{
 		inorder(root->left);
-		printf("%d =>", root->data);
+		printf("%d => ", root->data);
 		inorder(root->right);
 	}
 }
-
 
 void postorder(struct node* root) // Function for postorder traversal of the BST.
 {
@@ -113,14 +111,109 @@ void postorder(struct node* root) // Function for postorder traversal of the BST
 	{
 		postorder(root->left);
 		postorder(root->right);
-		printf("%d =>", root->data);
+		printf("%d => ", root->data);
 	}
+}
+
+void insertNode(struct node** root) // Function to insert node in to the BST.
+{
+	createBST(root);
+}
+
+int searchNode(struct node* root, int search) // Function to search node into the BST.
+{
+	if (root != NULL)
+	{
+		if (root->data == search) // Data found condition.
+		{
+			return 1;
+		}
+		else if (search > root->data)
+		{
+			searchNode(root->right, search);
+		}
+		else
+		{
+			searchNode(root->left, search);
+		}
+	}
+	else
+	{
+		return 0; // If data not found return 0.
+	}
+}
+
+void countNode(struct node* root, int* count) // Function to count the total nodes in the BST.
+{
+	if (root != NULL)
+	{
+		(*count)++;
+		countNode(root->left, count);
+		countNode(root->right, count);
+	}
+}
+
+void countLeafNode(struct node* root, int* count) // Function to count the total leaf nodes in the BST.
+{
+	if (root != NULL)
+	{
+		if (root->left == NULL && root->right == NULL) // Condition to check leaf node.
+		{
+			(*count)++;
+		}
+		countLeafNode(root->left, count);
+		countLeafNode(root->right, count);
+	}
+}
+
+void printLeafNodes(struct node* root) // Function to print the leaf nodes from BST.
+{
+	if (root != NULL)
+	{
+		if (root->left == NULL && root->right == NULL) // Condition to check leaf node.
+		{
+			printf("%d => ", root->data);
+		}
+		printLeafNodes(root->left);
+		printLeafNodes(root->right);
+	}
+}
+
+void heightOfTree(struct node* root) // Function to find the height of the tree
+{
+	int leftHeight = 0, rightHeight = 0;
+	struct node* Root = root;
+
+	while (root != NULL)
+	{
+		leftHeight++;
+		root = root->left;
+	}
+	while (Root != NULL)
+	{
+		rightHeight++;
+		Root = Root->right;
+	}
+
+	if (leftHeight > rightHeight)
+	{
+		printf("The Height of BST is: %d\n", leftHeight);
+	}
+	else
+	{
+		printf("The Height of BST is: %d\n", rightHeight);
+	}
+}
+
+void deleteNode(struct node** root, int num)
+{
+
 }
 
 void main()
 {
 	struct node* root = NULL;
-	int choice;
+	int choice, count;
 
 	do
 	{
@@ -132,6 +225,13 @@ void main()
 		printf("2. Preorder Traversal.\n");
 		printf("3. Inorder Traversal.\n");
 		printf("4. Postorder Traversal.\n");
+		printf("5. Insert Node.\n");
+		printf("6. Search Node.\n");
+		printf("7. Count Nodes.\n");
+		printf("8. Count Leaf Nodes.\n");
+		printf("9. Print Leaf Nodes.\n");
+		printf("10. Print Height of BST.\n");
+		printf("11. Delete Node.\n");
 		printf("Choice = ");
 		scanf_s("%d", &choice);
 		printf("********************************************\n");
@@ -158,6 +258,46 @@ void main()
 			printf("Postorder Traversal: ");
 			postorder(root);
 			printf("\n");
+			break;
+		case 5:
+			insertNode(&root);
+			break;
+		case 6:
+			printf("Enter the search Element: ");
+			int search;
+			scanf_s("%d", &search);
+			if (searchNode(root, search))
+			{
+				printf("Given element %d is found in BST.\n", search);
+			}
+			else
+			{
+				printf("Given element %d is NOT found in BST.\n", search);
+			}
+			break;
+		case 7:
+			count = 0;
+			countNode(root, &count);
+			printf("The Total Number of Nodes in BST are: %d \n", count);
+			break;
+		case 8:
+			count = 0;
+			countLeafNode(root, &count);
+			printf("The Total Number of Leaf Nodes in BST are: %d \n", count);
+			break;
+		case 9:
+			printf("Leaf Nodes: ");
+			printLeafNodes(root);
+			printf("\n");
+			break;
+		case 10:
+			heightOfTree(root);
+			break;
+		case 11:
+			printf("Enter Element which you want to delete: ");
+			int num;
+			scanf_s("%d", &num);
+			deleteNode(&root, num);
 			break;
 		default:
 			printf("Please Enter a Valid Choice.\n");
